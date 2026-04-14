@@ -6,7 +6,7 @@
 #include "extern.h"
 Node nodes[MAX_NODES];
 int genes[POPULATION][MAX_NODES];
-HyperGenes hyperGenes[POPULATION][MAX_HYPER_GENES];
+HyperGenes hyperGenes[POPULATION_OF_HYPER_GA][MAX_HYPER_GENES];
 double best = INFINITY;
 double hyper_best = INFINITY;
 double fitness[POPULATION];
@@ -20,6 +20,7 @@ char const *steps[MAX_HYPER_GENES] = {"tournament_selection", "roulette_selectio
 
 
 void ga(){
+    
     initialize();
     //初期化の中身を表示
     
@@ -64,6 +65,9 @@ void aline_hyperGenes(){
 }
 
 void hyperGa(){
+    const char* filename = "Iteration.txt";
+    FILE* fp = fopen(filename, "w"); 
+    char line[256];
     int hyper_individual = 0;
     initialize_hyperGA();
 
@@ -87,6 +91,8 @@ void hyperGa(){
         aline_hyperGenes();
         hyper_calc_fitness();
         printf("fitness done. best is %f. \n", hyper_fitness[0]);
+        snprintf(line, sizeof(line), "%f\n", hyper_fitness[0]);
+        fprintf(fp, "%s", line);
     }
     for (int j = 0; j < POPULATION_OF_HYPER_GA; j++) {
         if (hyper_fitness[j] < hyper_best) {
@@ -95,7 +101,22 @@ void hyperGa(){
         }
     }
     printf("hyper_best:%f\n", hyper_best);
-    
+
+    snprintf(line, sizeof(line), "%f\n", hyper_best);
+    fprintf(fp, "%s", line);
+    fclose(fp);
+
+    //　最適解も保存
+    const char* filenameAns = "Answer.txt";
+    FILE* fpAns = fopen(filenameAns, "w"); 
+    char lineAns[256];
+    for (int j = 0; j < MAX_HYPER_GENES; j++) {
+        if (hyperGenes[hyper_individual][j].step) {
+            snprintf(lineAns, sizeof(lineAns), "%s %f\n", hyperGenes[hyper_individual][j].step, hyperGenes[hyper_individual][j].rate);
+            fprintf(fpAns, "%s", lineAns);
+        }
+    }
+    fclose(fpAns);
 
     // hyper_individualの遺伝子を表示
     printf("Best HyperGenes: ");
@@ -123,6 +144,11 @@ int main() {
 
     //ga();
     //printf("best:%f\n",best);
+    //実行時間を計測
+    clock_t start = clock();
     hyperGa();
+    clock_t end = clock();
+    double elapsed = (double)(end - start) / CLOCKS_PER_SEC;
+    printf("Elapsed time: %f seconds\n", elapsed);
     return 0;
 }

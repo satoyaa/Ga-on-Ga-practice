@@ -52,7 +52,7 @@ void calc_hyper_fitness_ga(int individual){
     best = INFINITY;
     for(int i=0;i < MAX_ITERATION;i++){
         select_step(individual);
-        calc_fitness();// 適応度計算
+        calc_fitness();
         
     }
     // 現世代の最良個体を算出

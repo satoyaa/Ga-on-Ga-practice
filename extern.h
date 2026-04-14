@@ -2,14 +2,14 @@
 #define EXTERN_H
 
 #define MAX_NODES 51
-#define MAX_ITERATION 1000
-#define MAX_ITERATION_OF_HYPER_GA 50
-#define POPULATION 100
+#define MAX_ITERATION 250
+#define MAX_ITERATION_OF_HYPER_GA 100
+#define POPULATION 50
 #define POPULATION_OF_HYPER_GA 100
 #define MAX_LOOP 10
 #define SAMPLE_SIZE 100
 #define Critical_value 1.65258578361785 //自由度198の境界値
-#define LOOP 30 //標本数
+#define LOOP 10 //標本数
 #define MAX_HYPER_GENES 5
 
 
@@ -30,7 +30,7 @@ typedef struct
 
 extern Node nodes[MAX_NODES];  // 構造体配列の外部宣言
 extern int genes[POPULATION][MAX_NODES]; 
-extern HyperGenes hyperGenes[POPULATION][MAX_HYPER_GENES];
+extern HyperGenes hyperGenes[POPULATION_OF_HYPER_GA][MAX_HYPER_GENES];
 extern double fitness[POPULATION];
 extern double hyper_fitness[POPULATION_OF_HYPER_GA];
 extern double crossover_rates[3];
