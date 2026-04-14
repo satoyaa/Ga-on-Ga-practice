@@ -1,0 +1,8 @@
+gcc calc_fitness.c crossover_pmx.c initialize.c main.c mutation_reverse.c read.c selection_tournament.c
+
+
+gcc calc_fitness.c crossover.c initialize.c main.c mutation.c read.c selection.c initialize_hyperGA.c
+
+gcc calc_fitness.c crossover.c initialize.c main.c mutation.c read.c selection.c initialize_hyperGA.c
+
+gcc main.c read.c initialize.c initialize_hyperGA.c calc_fitness.c hyper_calc_fitness.c selection_tournament.c selection_roulette.c crossover_pmx.c mutation_reverse.c mutation_swap.c hyper_selection_tournament.c hyper_mutation_replacement.c hyper_crossover_onepoint.c

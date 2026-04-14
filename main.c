@@ -1,0 +1,128 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <time.h>
+#include "extern.h"
+Node nodes[MAX_NODES];
+int genes[POPULATION][MAX_NODES];
+HyperGenes hyperGenes[POPULATION][MAX_HYPER_GENES];
+double best = INFINITY;
+double hyper_best = INFINITY;
+double fitness[POPULATION];
+double hyper_fitness[POPULATION_OF_HYPER_GA];
+double crossover_rate = 0.5;
+double mutation_rate = 0.5;
+double hyper_mutation_rate = 0.5;
+double hyper_crossover_rate = 0.5;
+char const *steps[MAX_HYPER_GENES] = {"tournament_selection", "roulette_selection", "pmx", "swap", "reverse"};
+
+
+
+void ga(){
+    initialize();
+    //初期化の中身を表示
+    
+    calc_fitness();
+    for(int i=0;i < MAX_ITERATION;i++){
+        selection_tournament();          // トーナメント選択
+        selection_roulette();             // ルーレット選択
+        crossover_pmx();          // PMX交叉
+        mutation_reverse();           // 反転突然変異
+        calc_fitness();// 適応度計算
+    }
+    // 現世代の最良個体を算出
+    for (int j = 0; j < POPULATION; j++) {
+        if (fitness[j] < best) {
+            best = fitness[j];
+        }
+    }
+    //printf("best:%f\n",best);
+}
+
+void aline_hyperGenes(){
+    for(int i=0; i < POPULATION_OF_HYPER_GA; i++){
+        int pivot = 0;
+        for(int j=0;j<MAX_HYPER_GENES; j++){
+            if(hyperGenes[i][j].step == NULL){
+                break;
+            }
+            if(strstr(hyperGenes[i][j].step, "selection") != NULL){
+                HyperGenes temp;
+                temp.step = hyperGenes[i][j].step;
+                temp.rate = hyperGenes[i][j].rate;
+                for (int k = pivot; k < j; k++)
+                {
+                    hyperGenes[i][k+1].step = hyperGenes[i][k].step;
+                    hyperGenes[i][k+1].rate = hyperGenes[i][k].rate;
+                }
+                hyperGenes[i][pivot].step=temp.step;
+                hyperGenes[i][pivot].rate=temp.rate;
+            }
+        }
+    }    
+}
+
+void hyperGa(){
+    int hyper_individual = 0;
+    initialize_hyperGA();
+
+    hyper_calc_fitness();
+    
+    for (int i = 0; i < MAX_ITERATION_OF_HYPER_GA; i++)
+    {
+        //srand(1);
+        printf("iteration:%d. ", i);
+        hyper_selection_tournament();
+        printf("selection done. ");
+        
+
+        hyper_mutation_replacement();
+        printf("mutation done. ");
+
+        hyper_crossover_onepoint();
+
+        printf("crossover done. ");
+
+        aline_hyperGenes();
+        hyper_calc_fitness();
+        printf("fitness done. best is %f. \n", hyper_fitness[0]);
+    }
+    for (int j = 0; j < POPULATION_OF_HYPER_GA; j++) {
+        if (hyper_fitness[j] < hyper_best) {
+            hyper_best = hyper_fitness[j];
+            hyper_individual = j;
+        }
+    }
+    printf("hyper_best:%f\n", hyper_best);
+    
+
+    // hyper_individualの遺伝子を表示
+    printf("Best HyperGenes: ");
+    for (int j = 0; j < MAX_HYPER_GENES; j++) {
+        if (hyperGenes[hyper_individual][j].step) {
+            printf("%s %f ", hyperGenes[hyper_individual][j].step, hyperGenes[hyper_individual][j].rate);
+        }
+    }
+    //初期化の中身を見る
+    /*
+    for(int i=0; i < POPULATION_OF_HYPER_GA; i++){
+        printf("HyperGenes %d: ", i);
+        for(int j=0;j<MAX_HYPER_GENES; j++){
+            printf("%s %f ", hyperGenes[i][j].step, hyperGenes[i][j].rate);
+        }
+        printf("\n");
+    }*/
+    
+}
+
+int main() {
+
+    
+    read("eil51.tsp");
+
+    //ga();
+    //printf("best:%f\n",best);
+    hyperGa();
+    return 0;
+}
