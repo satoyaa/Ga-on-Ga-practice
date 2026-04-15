@@ -11,10 +11,10 @@ double best = INFINITY;
 double hyper_best = INFINITY;
 double fitness[POPULATION];
 double hyper_fitness[POPULATION_OF_HYPER_GA];
-double crossover_rate = 0.5;
-double mutation_rate = 0.5;
-double hyper_mutation_rate = 0.5;
-double hyper_crossover_rate = 0.5;
+double crossover_rate;
+double mutation_rate;
+double hyper_mutation_rate = 0.2;
+double hyper_crossover_rate = 0.7;
 char const *steps[MAX_HYPER_GENES] = {"tournament_selection", "roulette_selection", "pmx", "swap", "reverse"};
 
 
@@ -65,6 +65,7 @@ void aline_hyperGenes(){
 }
 
 void hyperGa(){
+    srand((unsigned int)time(NULL));
     const char* filename = "Iteration.txt";
     FILE* fp = fopen(filename, "w"); 
     char line[256];
@@ -76,6 +77,7 @@ void hyperGa(){
     for (int i = 0; i < MAX_ITERATION_OF_HYPER_GA; i++)
     {
         //srand(1);
+        
         printf("iteration:%d. ", i);
         hyper_selection_tournament();
         printf("selection done. ");

@@ -1,4 +1,4 @@
-tournament_selection 0.414380
-tournament_selection 0.450423
-tournament_selection 0.450423
-swap 0.533982
+tournament_selection 0.795099
+reverse 0.205695
+reverse 0.235389
+swap 0.207007

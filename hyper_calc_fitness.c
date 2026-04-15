@@ -44,9 +44,10 @@ void select_step(int individual){
     }    
 }
 
-void calc_hyper_fitness_ga(int individual){
+void calc_hyper_fitness_ga(int individual, int loop){
     //ここで初期化
-    srand((unsigned int)time(NULL));
+    //srand((unsigned int)time(NULL));
+    srand(loop);
     initialize();
     calc_fitness();
     best = INFINITY;
@@ -66,9 +67,9 @@ void calc_hyper_fitness_ga(int individual){
 void hyper_calc_fitness(){
     for(int i=0; i<POPULATION_OF_HYPER_GA; i++){
         double sum_best_fitness = 0;
-        for (int i = 0; i < LOOP; i++)
+        for (int j = 0; j < LOOP; j++)
         {
-            calc_hyper_fitness_ga(i);
+            calc_hyper_fitness_ga(i, j);
             
             sum_best_fitness += best;
         }

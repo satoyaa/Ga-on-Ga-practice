@@ -19,13 +19,13 @@ void hyper_mutation_replacement(){
                 int flag = 0;
                 int index = rand()%MAX_HYPER_GENES;
                 float rate = (float)rand()/RAND_MAX;
-                for (int j = 0; j < hyper_genes_index + 1; j++)
+                for (int k = 0; k < hyper_genes_index + 1; k++)
                 {
-                    if (!hyperGenes[i][j].step)
+                    if (!hyperGenes[i][k].step)
                     {
                         break;
                     }
-                    if (strcmp(steps[index], hyperGenes[i][j].step) == 0){
+                    if (strcmp(steps[index], hyperGenes[i][k].step) == 0){
                         
                         flag = 1;
                         break;
