@@ -33,12 +33,12 @@ void select_step(int individual){
         }
         else if (strcmp("swap", hyperGenes[individual][j].step) == 0)
         {
-            mutation_rate = hyperGenes[individual][j].rate;
+            mutation_rate = pow(hyperGenes[individual][j].rate, 4);
             mutation_swap();
         }
         else if (strcmp("reverse", hyperGenes[individual][j].step) == 0)
         {
-            mutation_rate = hyperGenes[individual][j].rate;
+            mutation_rate = pow(hyperGenes[individual][j].rate, 4);
             mutation_reverse();
         }
     }    

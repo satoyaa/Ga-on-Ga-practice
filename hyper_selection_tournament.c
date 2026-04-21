@@ -22,18 +22,14 @@ void hyper_selection_tournament(){
         int r1 = rand() % POPULATION_OF_HYPER_GA;
         int r2 = rand() % POPULATION_OF_HYPER_GA;
 
-        /* tournament: choose the better (smaller fitness) */
         int winner = (hyper_fitness[r1] < hyper_fitness[r2]) ? r1 : r2;
-        /* copy the whole gene row at once */
         memcpy(new_hyperGenes[i], hyperGenes[winner], sizeof(new_hyperGenes[i]));
         new_hyper_fitness[i] = hyper_fitness[winner];
     }
 
-    /* inject elite (best) into index 0 */
     memcpy(hyperGenes[0], best_hyper, sizeof(best_hyper));
     hyper_fitness[0] = best_f;
 
-    /* fill rest from new population (keep elite at 0) */
     for(int i = 1; i < POPULATION_OF_HYPER_GA; i++){
         memcpy(hyperGenes[i], new_hyperGenes[i], sizeof(new_hyperGenes[i]));
         hyper_fitness[i] = new_hyper_fitness[i];

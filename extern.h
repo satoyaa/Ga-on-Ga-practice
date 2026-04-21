@@ -4,12 +4,12 @@
 #define MAX_NODES 51
 #define MAX_ITERATION 1000
 #define MAX_ITERATION_OF_HYPER_GA 100
-#define POPULATION 50
+#define POPULATION 100
 #define POPULATION_OF_HYPER_GA 100
 #define MAX_LOOP 10
 #define SAMPLE_SIZE 100
 #define Critical_value 1.65258578361785 //自由度198の境界値
-#define LOOP 30 //標本数
+#define LOOP 500 //標本数
 #define MAX_HYPER_GENES 5
 
 
