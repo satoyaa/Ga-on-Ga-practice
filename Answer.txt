@@ -1,4 +1,4 @@
-tournament_selection 0.490738
-reverse 0.719199
-pmx 0.476760
-reverse 0.736045
+tournament_selection 0.026307
+swap 0.672048
+reverse 0.466933
+pmx 0.125950

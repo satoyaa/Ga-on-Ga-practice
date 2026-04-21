@@ -28,6 +28,38 @@ void hyper_crossover_onepoint(){
             new_hyperGenes[i][j].rate = hyperGenes[i][j].rate;
             new_hyperGenes[i+1][j].rate = hyperGenes[i+1][j].rate;   
         }
+        // ここで new_hyperGenes[i] と new_hyperGenes[i+1] 内で重複が起こってないか検証
+        // 重複が見つかれば交叉を取りやめ，元の遺伝子に戻す
+        int dup_found = 0;
+        for (int a = 0; a < MAX_HYPER_GENES; a++) {
+            if (!new_hyperGenes[i][a].step) continue;
+            for (int b = a + 1; b < MAX_HYPER_GENES; b++) {
+                if (!new_hyperGenes[i][b].step) continue;
+                if (strcmp(new_hyperGenes[i][a].step, new_hyperGenes[i][b].step) == 0) {
+                    dup_found = 1;
+                    break;
+                }
+            }
+            if (dup_found) break;
+        }
+        if (!dup_found) {
+            for (int a = 0; a < MAX_HYPER_GENES; a++) {
+                if (!new_hyperGenes[i+1][a].step) continue;
+                for (int b = a + 1; b < MAX_HYPER_GENES; b++) {
+                    if (!new_hyperGenes[i+1][b].step) continue;
+                    if (strcmp(new_hyperGenes[i+1][a].step, new_hyperGenes[i+1][b].step) == 0) {
+                        dup_found = 1;
+                        break;
+                    }
+                }
+                if (dup_found) break;
+            }
+        }
+        if (dup_found) {
+            /* cancel crossover for this pair: restore originals */
+            memcpy(new_hyperGenes[i], hyperGenes[i], sizeof(new_hyperGenes[i]));
+            memcpy(new_hyperGenes[i+1], hyperGenes[i+1], sizeof(new_hyperGenes[i+1]));
+        }
     }
     memcpy(hyperGenes[0], best_hyper, sizeof(best_hyper));
 

@@ -14,7 +14,7 @@ double best_fitness[LOOP];
 double hyper_fitness[POPULATION_OF_HYPER_GA];
 double crossover_rate;
 double mutation_rate;
-double hyper_mutation_rate = 0.2;
+double hyper_mutation_rate = 0.5;
 double hyper_crossover_rate = 0.7;
 char const *steps[MAX_HYPER_GENES] = {"tournament_selection", "roulette_selection", "pmx", "swap", "reverse"};
 
